@@ -4,8 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    app.api_key: '%env(resolve:API_KEY)%'
+    app.api_url: '%env(resolve:API_PROVIDER_URL)%'
 services:
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -19,6 +21,13 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+
+    App\Command\FetchCurrentExchangeRatesCommand:
+
+        arguments:
+            $apiKey : '%app.api_key%'
+            $apiUrl : '%app.api_url%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

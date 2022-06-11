@@ -1,1 +1,1 @@
-# cryptocurrency-viewer
+# crypto-exchange-api
