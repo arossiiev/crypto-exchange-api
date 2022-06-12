@@ -1,1 +1,0 @@
-* * * * * /var/www/crypto-exchange-api/cron/fetch.sh >> /var/log/cron.log 2>&1

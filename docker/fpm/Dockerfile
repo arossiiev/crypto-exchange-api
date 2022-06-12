@@ -2,13 +2,12 @@ FROM php:7.4-fpm
 
 
 RUN apt-get update
-RUN apt-get php7 php7-fpm php7-opcache
+
 COPY ./docker/fpm/wait-for-it.sh /usr/bin/wait-for-it
-COPY ./cron/fetch.sh /usr/bin/fetch
-COPY ./cron/cron /etc/cron.d/cron
+
 
 RUN chmod +x /usr/bin/wait-for-it
-RUN chmod +x /usr/bin/fetch
+
 
 RUN apt-get update \
 && apt-get install -y zip unzip libzip-dev default-mysql-client \
@@ -21,10 +20,10 @@ ADD composer.json composer.lock /var/www/crypto-exchange-api/
 
 
 RUN touch /var/log/cron.log
-RUN chmod +x /etc/cron.d/cron
-RUN crontab /etc/cron.d/cron
+
 
 WORKDIR /var/www/crypto-exchange-api/
 
+RUN echo "* * * * *  root php /var/www/crypto-exchange-api/bin/console app:fetch >> /var/log/cron.log 2>&1" >> /etc/crontab
 
 CMD composer i -o ; wait-for-it db:3302 -- bin/console doctrine:migrations:migrate ; php-fpm; cron && tail -f /var/log/cron.log;
