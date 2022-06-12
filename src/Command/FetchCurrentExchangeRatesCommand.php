@@ -51,7 +51,7 @@ class FetchCurrentExchangeRatesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->write("In command!");
+
         $assetPairs = $this->assetPairRepository->findAll();
 
         foreach ($assetPairs as $assetPair){
@@ -81,13 +81,13 @@ class FetchCurrentExchangeRatesCommand extends Command
                 }
 
             } catch (TransportExceptionInterface $e) {
-                $output->write("Fail!!");
+
                 continue;
             }
         }
 
         $this->entityManager->flush();
-        $output->write("Success!!");
+
         return Command::SUCCESS;
     }
 

@@ -24,6 +24,6 @@ RUN touch /var/log/cron.log
 
 WORKDIR /var/www/crypto-exchange-api/
 
-RUN echo "* * * * *  root php /var/www/crypto-exchange-api/bin/console app:fetch >> /var/log/cron.log 2>&1" >> /etc/crontab
+RUN echo "0 * * * *  root php /var/www/crypto-exchange-api/bin/console app:fetch >> /var/log/cron.log 2>&1" >> /etc/crontab
 
-CMD composer i -o ; wait-for-it db:3302 -- bin/console doctrine:migrations:migrate ; php-fpm; cron && tail -f /var/log/cron.log;
+CMD composer i -o ; wait-for-it db:3302 -- bin/console doctrine:migrations:migrate ; php-fpm;
